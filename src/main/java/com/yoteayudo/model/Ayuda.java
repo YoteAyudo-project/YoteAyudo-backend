@@ -1,56 +1,150 @@
 package com.yoteayudo.model;
+import java.time.LocalDateTime;
+import java.util.Locale.Category;
 
-import java.util.List;
+import org.apache.catalina.User;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
-import org.springframework.stereotype.Service;
+    @Entity
+public class Ayuda {
 
-@Service public class Ayuda {
-
-    private final AyudaRepository ayudaRepository;
-    
-    public Ayuda(AyudaRepository ayudaRepository) { this.ayudaRepository = ayudaRepository; }
-    
-    public Ayuda crearAyuda(Ayuda ayuda) { return ayudaRepository.save(ayuda); }
-    
-    public List<Ayuda> obtenerTodasLasAyudas() { return ayudaRepository.findAll(); }
-    
-    public Ayuda obtenerAyudaPorId(Long id) { return ayudaRepository.findById(id).orElseThrow(() -> new RuntimeException("Ayuda no encontrada")); }
-    
-    public Ayuda actualizarAyuda(Long id, Ayuda ayudaActualizada) { Ayuda ayudaExistente = obtenerAyudaPorId(id); ayudaExistente.setTitulo(((Ayuda) ayudaActualizada).getTitulo()); ayudaExistente.setDescripcion(ayudaActualizada.getDescripcion()); return ayudaRepository.save(ayudaExistente); }
-    
-    public void eliminarAyuda(Long id) { ayudaRepository.deleteById(id); }
-
-    private String titulo;
-    private String descripcion;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    public Ayuda(Long id, String titulo, String descripcion) {
-        this.ayudaRepository = null;
-        this.id = id;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String content;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+   
+    public Ayuda() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
-    
+
+   
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
-    
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+ 
+
+    @Column(nullable = false)
+    private String titulo;
+
+    @Column(nullable = false)
+    private String descripcion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+   
+
+  
+    @JoinColumn(name = "user_id")
+  
+
     public String getTitulo() {
         return titulo;
     }
-    
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-    
+
     public String getDescripcion() {
         return descripcion;
     }
-    
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }}
+    }
+
+  
+
+ 
+
+  
+
+   
+    
+
+}
+
+
+
