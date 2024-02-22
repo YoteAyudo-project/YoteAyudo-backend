@@ -1,6 +1,13 @@
 package com.yoteayudo.model;
 
-public class AyudaApplication {
-    
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public static void main(String[] args) { }} 
+@SpringBootApplication
+public class AyudaApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AyudaApplication.class, args);
+    }
+
+}
